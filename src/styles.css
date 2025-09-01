@@ -9,3 +9,19 @@ body{ font-family: Arial, sans-serif; margin:0; padding:0; }
 .input{ padding:8px; width:100%; }
 
 @media (max-width:600px){ .topnav{ flex-direction:column; } }
+
+/* 🔹 Top Back Nav */
+.back-nav {
+  margin-bottom: 20px;
+}
+
+.back-link {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}

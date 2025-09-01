@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import CustomerListPage from './pages/CustomerListPage';
 import CustomerFormPage from './pages/CustomerFormPage';
 import CustomerDetailPage from './pages/CustomerDetailPage';
+import "./App.css";
+
 
 export default function App() {
   return (
