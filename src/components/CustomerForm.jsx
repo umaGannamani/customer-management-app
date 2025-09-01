@@ -6,7 +6,7 @@ export default function CustomerForm({ initial, onSubmit }) {
     last_name: '',
     phone_number: '',
     email: '',
-    only_one_address: 0
+    only_one_address: 0,
   });
 
   useEffect(() => {
@@ -16,16 +16,16 @@ export default function CustomerForm({ initial, onSubmit }) {
         last_name: initial.last_name || '',
         phone_number: initial.phone_number || '',
         email: initial.email || '',
-        only_one_address: initial.only_one_address || 0
+        only_one_address: initial.only_one_address || 0,
       });
     }
   }, [initial]);
 
   function handleChange(e) {
     const { name, value, type, checked } = e.target;
-    setForm(prev => ({
+    setForm((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? (checked ? 1 : 0) : value
+      [name]: type === 'checkbox' ? (checked ? 1 : 0) : value,
     }));
   }
 
@@ -38,30 +38,73 @@ export default function CustomerForm({ initial, onSubmit }) {
   }
 
   return (
-    <form onSubmit={submit} className="customer-form">
+    <form onSubmit={submit} className="customer-form card">
+      <h2 className="form-title">{initial ? "Edit Customer" : "Add Customer"}</h2>
+
       <div className="form-row">
-        <label>First Name</label>
-        <input className="input" name="first_name" value={form.first_name} onChange={handleChange} required />
+        <label htmlFor="first_name">First Name <span className="required">*</span></label>
+        <input
+          id="first_name"
+          className="input"
+          name="first_name"
+          value={form.first_name}
+          onChange={handleChange}
+          required
+        />
       </div>
+
       <div className="form-row">
-        <label>Last Name</label>
-        <input className="input" name="last_name" value={form.last_name} onChange={handleChange} required />
+        <label htmlFor="last_name">Last Name <span className="required">*</span></label>
+        <input
+          id="last_name"
+          className="input"
+          name="last_name"
+          value={form.last_name}
+          onChange={handleChange}
+          required
+        />
       </div>
+
       <div className="form-row">
-        <label>Phone</label>
-        <input className="input" name="phone_number" value={form.phone_number} onChange={handleChange} required />
+        <label htmlFor="phone_number">Phone <span className="required">*</span></label>
+        <input
+          id="phone_number"
+          className="input"
+          name="phone_number"
+          value={form.phone_number}
+          onChange={handleChange}
+          required
+        />
       </div>
+
       <div className="form-row">
-        <label>Email</label>
-        <input className="input" name="email" value={form.email} onChange={handleChange} />
+        <label htmlFor="email">Email</label>
+        <input
+          id="email"
+          className="input"
+          type="email"
+          name="email"
+          value={form.email}
+          onChange={handleChange}
+        />
       </div>
-      <div className="form-row">
-        <label>
-          <input type="checkbox" name="only_one_address" checked={!!form.only_one_address} onChange={handleChange} /> Only One Address
+
+      <div className="form-row checkbox-row">
+        <label className="checkbox-label">
+          <input
+            type="checkbox"
+            name="only_one_address"
+            checked={!!form.only_one_address}
+            onChange={handleChange}
+          />
+          Only One Address
         </label>
       </div>
-      <div className="form-row">
-        <button className="button" type="submit">Save</button>
+
+      <div className="form-actions">
+        <button className="button primary" type="submit">
+          💾 Save
+        </button>
       </div>
     </form>
   );

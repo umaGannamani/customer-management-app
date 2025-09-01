@@ -16,7 +16,7 @@ export default function App() {
       </nav>
       <div className="container">
         <Routes>
-          <Route path="/" element={<h2>Welcome — Customer Management</h2>} />
+          <Route path="/" element={<h2 className="heading">Welcome — Customer Management</h2>} />
           <Route path="/customers" element={<CustomerListPage />} />
           <Route path="/customers/new" element={<CustomerFormPage />} />
           <Route path="/customers/:id/edit" element={<CustomerFormPage />} />

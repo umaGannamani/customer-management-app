@@ -217,3 +217,22 @@ form button:hover {
     text-align: left;
   }
 }
+/* Fancy Gradient Heading */
+.heading {
+  font-size: 2rem;
+  font-weight: bold;
+  background: linear-gradient(90deg, #ff416c, #ff4b2b, #ffcc00, #00c9ff, #92fe9d);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  padding: 15px 25px;
+  border-radius: 12px;
+  background-size: 300% 300%;
+  animation: gradientMove 5s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}

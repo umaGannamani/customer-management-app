@@ -7,7 +7,7 @@ export default function CustomerFormPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [initial, setInitial] = useState(null);
-  const [message, setMessage] = useState(null); // success or error message
+  const [message, setMessage] = useState(null); 
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -16,7 +16,7 @@ export default function CustomerFormPage() {
         .then(r => setInitial(r.data))
         .catch(err => {
           console.error(err);
-          setError("Failed to load customer details.");
+          setError("❌ Failed to load customer details.");
         });
     }
   }, [id]);
@@ -33,7 +33,7 @@ export default function CustomerFormPage() {
         await api.post('/customers', data);
         setMessage("✅ Created successfully");
       }
-      setTimeout(() => navigate('/customers'), 1500); // redirect after delay
+      setTimeout(() => navigate('/customers'), 1500);
     } catch (err) {
       console.error(err);
       setError("❌ Something went wrong. Please try again.");
@@ -42,15 +42,19 @@ export default function CustomerFormPage() {
 
   return (
     <div className="page">
-      {/* Back Navigation */}
+      {/* 🔹 Back to List */}
       <div className="back-nav">
-        <Link to="/customers" className="back-link">← Back to Customers List</Link>
+        <Link to="/customers" className="back-link">← Back to Customers</Link>
       </div>
 
-      {/* Show messages */}
+      {/* 🔹 Page Title */}
+      <h2>{id ? "Edit Customer" : "Add New Customer"}</h2>
+
+      {/* 🔹 Messages */}
       {message && <div className="alert success">{message}</div>}
       {error && <div className="alert error">{error}</div>}
 
+      {/* 🔹 Form */}
       <CustomerForm onSubmit={handleSubmit} initial={initial} />
     </div>
   );

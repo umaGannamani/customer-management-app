@@ -1,18 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
-import api from '../api';
-import AddressList from '../components/AddressList';
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate, Link } from "react-router-dom";
+import api from "../api";
+import AddressList from "../components/AddressList";
 
 export default function CustomerDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [customer, setCustomer] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   function fetch() {
+    setLoading(true);
+    setError(null);
     api
       .get(`/customers/${id}`)
-      .then((r) => setCustomer(r.data))
-      .catch((err) => console.error(err));
+      .then((r) => {
+        setCustomer(r.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setError("Customer not found or failed to load.");
+        setLoading(false);
+      });
   }
 
   useEffect(() => {
@@ -20,18 +31,30 @@ export default function CustomerDetailPage() {
   }, [id]);
 
   function handleDelete() {
-    if (window.confirm('Delete customer?')) {
+    if (window.confirm("Are you sure you want to delete this customer?")) {
       api
         .delete(`/customers/${id}`)
         .then(() => {
-          alert('Deleted');
-          navigate('/customers');
+          navigate("/customers", {
+            state: { message: "Customer deleted successfully" },
+          });
         })
         .catch((err) => console.error(err));
     }
   }
 
-  if (!customer) return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <div className="loading-spinner">
+        <div className="spinner"></div>
+        <p>Loading customer details...</p>
+      </div>
+    );
+  }
+
+  if (error) return <div className="error-message">{error}</div>;
+
+  if (!customer) return <div className="error-message">Customer not found.</div>;
 
   return (
     <div className="detail-page">
@@ -45,12 +68,19 @@ export default function CustomerDetailPage() {
       <h2>
         {customer.first_name} {customer.last_name}
       </h2>
-      <p>Phone: {customer.phone_number}</p>
-      <p>Email: {customer.email}</p>
+      <p>
+        <strong>Phone:</strong> {customer.phone_number}
+      </p>
+      <p>
+        <strong>Email:</strong> {customer.email}
+      </p>
 
-      <div style={{ marginBottom: '15px' }}>
+      <div className="action-buttons">
+        <Link to={`/customers/${id}/edit`} className="button edit">
+          ✏️ Edit
+        </Link>
         <button onClick={handleDelete} className="button delete">
-          Delete
+          🗑️ Delete
         </button>
       </div>
 
